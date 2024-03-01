@@ -1,13 +1,13 @@
+import { InjectQueue } from '@nestjs/bull';
 import { Inject, Injectable, Logger } from '@nestjs/common';
+import { Queue } from 'bull';
 import { createTransport } from 'nodemailer';
 import Mail, { Address } from 'nodemailer/lib/mailer';
 import isEmail from 'validator/lib/isEmail';
 import { MAILER_OPTIONS } from '../constants/mailer.constant';
 import { MailerOptions } from '../interfaces/mailer-options.interface';
-import { MailContentService } from './mail-content.service';
-import { InjectQueue } from '@nestjs/bull';
-import { Queue } from 'bull';
 import { BaseMail } from '../mails/base.mail';
+import { MailContentService } from './mail-content.service';
 
 @Injectable()
 export class MailService {
@@ -59,10 +59,17 @@ export class MailService {
 
     private async getMailOptions(mail: BaseMail) {
         let content = await this.mailContentService.getContent(mail);
+        let defaultFrom = '';
+        if (this.mailerOptions.defaultFrom instanceof Function) {
+            defaultFrom = await this.mailerOptions.defaultFrom(mail);
+        } else {
+            defaultFrom = this.mailerOptions.defaultFrom;
+        }
+
         return {
-            from: mail.from || this.mailerOptions.defaultFrom,
+            from: mail.from || defaultFrom,
             to: this.getValidReceivers(mail.to),
-            subject: await mail.subject,
+            subject: mail.subject,
             html: content,
             cc: this.getValidReceivers(mail.cc),
             attachments: mail.listAttachments(),

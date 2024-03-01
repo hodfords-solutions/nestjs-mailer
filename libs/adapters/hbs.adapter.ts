@@ -1,59 +1,68 @@
+import { readdirSync, readFileSync } from 'fs';
 import Handlebars from 'handlebars';
-import { BaseViewAdapter } from './base-view.adapter';
-import fs, { readFileSync } from 'fs';
-import path from 'path';
 import { camelCase } from 'lodash';
-import { BaseMail } from '../mails/base.mail';
+import { join } from 'path';
 import { HbsConfig } from '../interfaces/hbs-config.interface';
+import { BaseMail } from '../mails/base.mail';
+import { BaseViewAdapter } from './base-view.adapter';
 
 export class HbsAdapter extends BaseViewAdapter {
+    handlebars: typeof Handlebars;
+
     constructor(private option: HbsConfig) {
         super();
+        this.handlebars = Handlebars.create();
         this.initTemplate();
         this.initHelper();
     }
 
-    initTemplate() {
+    private initTemplate() {
         if (this.option.templateFolder) {
-            let files = fs.readdirSync(this.option.templateFolder);
-            for (let file of files) {
-                if (file.endsWith('.hbs')) {
-                    Handlebars.registerPartial(
-                        camelCase(file.replace('.hbs', '').replace('.', '-')),
-                        this.getComponentContent(path.join(this.option.templateFolder, file))
-                    );
-                }
-            }
+            this.registerPartials({ name: this.option.templateFolder, prefix: '' });
         }
+
         if (this.option.templates) {
             for (let template of this.option.templates) {
-                Handlebars.registerPartial(template.name, this.getComponentContent(template.path));
+                this.handlebars.registerPartial(template.name, this.getComponentContent(template.path));
             }
         }
     }
 
-    initHelper() {
+    private registerPartials(folder: { name: string; prefix: string }) {
+        const files = readdirSync(folder.name);
+        for (const file of files) {
+            if (file.endsWith('.hbs')) {
+                const partialName = `${folder.prefix}-${file.replace('.hbs', '').replace('.', '-')}`;
+                this.handlebars.registerPartial(
+                    camelCase(partialName),
+                    this.getComponentContent(join(folder.name, file))
+                );
+            }
+        }
+    }
+
+    private initHelper() {
         if (this.option.helper) {
             for (let helperName of Object.keys(this.option.helper)) {
-                Handlebars.registerHelper(helperName, this.option.helper[helperName]);
+                this.handlebars.registerHelper(helperName, this.option.helper[helperName]);
             }
         }
     }
 
-    getComponentContent(file: string) {
+    private getComponentContent(file: string) {
         return readFileSync(file).toString();
     }
 
     async render(mail: BaseMail): Promise<string> {
         let defaultVariable = this.option.defaultVariable;
-        let template = Handlebars.compile(this.getTemplateContent(mail), {});
+        let template = this.handlebars.compile(this.getTemplateContent(mail), {});
         if (this.option.defaultVariable instanceof Function) {
-            defaultVariable = await this.option.defaultVariable();
+            defaultVariable = await this.option.defaultVariable(mail);
         }
 
         return template({
             ...defaultVariable,
-            ...(await mail.data())
+            ...mail.data()
         });
     }
 }
