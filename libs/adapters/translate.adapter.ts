@@ -1,6 +1,6 @@
-import { BaseViewAdapter } from './base-view.adapter';
-import { BaseMail } from '../mails/base.mail';
 import { escapeRegExp } from 'lodash';
+import { BaseMail } from '../mails/base.mail';
+import { BaseViewAdapter } from './base-view.adapter';
 
 export class TranslateAdapter extends BaseViewAdapter {
     constructor(private trans: (...args: unknown[]) => string) {

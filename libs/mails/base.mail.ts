@@ -4,7 +4,7 @@ export abstract class BaseMail {
     private details: string = '';
     private attachments: Attachment[] = [];
 
-    abstract get subject(): string | Promise<string>;
+    abstract get subject(): string;
 
     abstract get to(): string | string[];
 

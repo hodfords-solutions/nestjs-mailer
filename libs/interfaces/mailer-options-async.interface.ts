@@ -1,10 +1,9 @@
-import { Abstract, ModuleMetadata, Type } from '@nestjs/common';
-
-import { MailerOptions } from './mailer-options.interface';
+import { ModuleMetadata, Type } from '@nestjs/common';
 import { MailerOptionsFactory } from './mailer-options-factory.interface';
+import { MailerOptions } from './mailer-options.interface';
 
 export interface MailerAsyncOptions extends Pick<ModuleMetadata, 'imports'> {
-    inject?: Array<Type<any> | string | symbol | Abstract<any> | Function>;
+    inject?: any;
     useExisting?: Type<MailerOptionsFactory>;
     useClass?: Type<MailerOptionsFactory>;
     useFactory?: (...args: any[]) => Promise<MailerOptions> | MailerOptions;
