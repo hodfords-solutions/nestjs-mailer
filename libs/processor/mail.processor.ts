@@ -1,8 +1,8 @@
 import { OnQueueActive, OnQueueCompleted, OnQueueFailed, Process, Processor } from '@nestjs/bull';
-import { Job } from 'bull';
-import { MailService } from '../services/mail.service';
 import { Logger } from '@nestjs/common';
-import Mail from 'nodemailer/lib/mailer';
+import { Job } from 'bull';
+import Mail, { Address } from 'nodemailer/lib/mailer';
+import { MailService } from '../services/mail.service';
 
 @Processor('mails')
 export class MailProcessor {
@@ -15,18 +15,33 @@ export class MailProcessor {
         await this.mailService.sendToTransport(job.data);
     }
 
+    private mapAddress(to: string | Address | Array<string | Address> | undefined) {
+        if (!to) {
+            return '';
+        }
+
+        if (Array.isArray(to)) {
+            return to.map((address) => (typeof address === 'string' ? address : address.address)).join(',');
+        }
+
+        return typeof to === 'string' ? to : to.address;
+    }
+
     @OnQueueActive()
-    onActive(job: Job) {
-        this.logger.debug(`Processing mail job ${job.id} to ${job.data.to}.`);
+    onActive(job: Job<Mail.Options>) {
+        this.logger.debug(`Processing mail job ${job.id} to ${this.mapAddress(job.data.to)}.`);
     }
 
     @OnQueueCompleted()
-    onComplete(job: Job) {
-        this.logger.debug(`Completed mail job ${job.id} to ${job.data.to}.`);
+    onComplete(job: Job<Mail.Options>) {
+        this.logger.debug(`Completed mail job ${job.id} to ${this.mapAddress(job.data.to)}.`);
     }
 
     @OnQueueFailed()
-    onError(job: Job<any>, error: any) {
-        this.logger.error(`Failed mail job ${job.id} to ${job.data.to}: ${error.message}`, error.stack);
+    onError(job: Job<Mail.Options>, error: Error) {
+        this.logger.error(
+            `Failed mail job ${job.id} to ${this.mapAddress(job.data.to)}: ${error.message}`,
+            error.stack
+        );
     }
 }
