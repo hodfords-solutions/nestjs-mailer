@@ -23,11 +23,11 @@ export class MailService {
         this.transport = createTransport(mailerOptions.transport);
     }
 
-    public async addToQueue(mail: BaseMail) {
+    public async addToQueue(mail: BaseMail): Promise<void> {
         await this.mailQueue.add(await this.getMailOptions(mail));
     }
 
-    public async send(mail: BaseMail) {
+    public async send(mail: BaseMail): Promise<void | undefined> {
         try {
             const mailOption = await this.getMailOptions(mail);
             if (mailOption.to.length) {
@@ -42,7 +42,7 @@ export class MailService {
         }
     }
 
-    public async sendToTransport(options: Mail.Options) {
+    public async sendToTransport(options: Mail.Options): Promise<void | undefined> {
         try {
             const mailOptions = this.getNodeMailerOptions(options);
             if (mailOptions.to.length) {
@@ -58,7 +58,7 @@ export class MailService {
     }
 
     private async getMailOptions(mail: BaseMail) {
-        let content = await this.mailContentService.getContent(mail);
+        const content = await this.mailContentService.getContent(mail);
         let defaultFrom = '';
         if (this.mailerOptions.defaultFrom instanceof Function) {
             defaultFrom = await this.mailerOptions.defaultFrom(mail);
@@ -113,7 +113,7 @@ export class MailService {
         }, [] as string[]);
     }
 
-    private logException(err: any) {
+    private logException(err: any): void {
         if (err instanceof Error) {
             this.logger.error(err.message, err.stack);
         } else {
