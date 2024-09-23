@@ -16,19 +16,19 @@ export class HbsAdapter extends BaseViewAdapter {
         this.initHelper();
     }
 
-    private initTemplate() {
+    private initTemplate(): void {
         if (this.option.templateFolder) {
             this.registerPartials({ name: this.option.templateFolder, prefix: '' });
         }
 
         if (this.option.templates) {
-            for (let template of this.option.templates) {
+            for (const template of this.option.templates) {
                 this.handlebars.registerPartial(template.name, this.getComponentContent(template.path));
             }
         }
     }
 
-    private registerPartials(folder: { name: string; prefix: string }) {
+    private registerPartials(folder: { name: string; prefix: string }): void {
         const files = readdirSync(folder.name);
         for (const file of files) {
             if (file.endsWith('.hbs')) {
@@ -41,21 +41,21 @@ export class HbsAdapter extends BaseViewAdapter {
         }
     }
 
-    private initHelper() {
+    private initHelper(): void {
         if (this.option.helper) {
-            for (let helperName of Object.keys(this.option.helper)) {
+            for (const helperName of Object.keys(this.option.helper)) {
                 this.handlebars.registerHelper(helperName, this.option.helper[helperName]);
             }
         }
     }
 
-    private getComponentContent(file: string) {
+    private getComponentContent(file: string): string {
         return readFileSync(file).toString();
     }
 
     async render(mail: BaseMail): Promise<string> {
         let defaultVariable = this.option.defaultVariable;
-        let template = this.handlebars.compile(this.getTemplateContent(mail), {});
+        const template = this.handlebars.compile(this.getTemplateContent(mail), {});
         if (this.option.defaultVariable instanceof Function) {
             defaultVariable = await this.option.defaultVariable(mail);
         }

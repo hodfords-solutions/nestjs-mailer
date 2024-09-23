@@ -7,8 +7,8 @@ import { BaseMail } from '../mails/base.mail';
 export class MailContentService {
     constructor(@Inject(MAILER_OPTIONS) private mailerOptions: MailerOptions) {}
 
-    async getContent(mail: BaseMail) {
-        for (let adapter of this.mailerOptions.renders.adapters) {
+    async getContent(mail: BaseMail): Promise<string> {
+        for (const adapter of this.mailerOptions.renders.adapters) {
             mail.content = await adapter.render(mail);
         }
         return mail.content;
