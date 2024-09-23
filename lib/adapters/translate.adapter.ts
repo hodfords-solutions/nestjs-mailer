@@ -1,6 +1,7 @@
 import { escapeRegExp } from 'lodash';
 import { BaseMail } from '../mails/base.mail';
 import { BaseViewAdapter } from './base-view.adapter';
+import { ParseTransTagType } from '../types/parse-trans-tag.type';
 
 export class TranslateAdapter extends BaseViewAdapter {
     constructor(private trans: (...args: unknown[]) => string) {
@@ -8,7 +9,7 @@ export class TranslateAdapter extends BaseViewAdapter {
     }
 
     render(mail: BaseMail): string {
-        let content = this.getTemplateContent(mail);
+        const content = this.getTemplateContent(mail);
         return this.replaceTranslateContent(content);
     }
 
@@ -49,7 +50,7 @@ export class TranslateAdapter extends BaseViewAdapter {
         return content;
     }
 
-    private parseTransTag(matchedTag: string) {
+    private parseTransTag(matchedTag: string): ParseTransTagType {
         const transTagRegex = /(<\s*trans[^>]*>)(.*?)<\s*\/\s*trans>/;
         const transTags = matchedTag.match(transTagRegex);
 
