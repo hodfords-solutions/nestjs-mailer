@@ -1,65 +1,65 @@
 {
-  "name": "@hodfords/nestjs-mailer",
-  "version": "11.1.1",
-  "description": "Simplifies sending emails in NestJS apps",
-  "main": "index.js",
-  "scripts": {
-    "prebuild": "rimraf dist",
-    "build": "tsc",
-    "postbuild": "cp package.json dist && cp README.md dist && cp .npmrc dist",
-    "format": "prettier --write \"lib/**/*.ts\"",
-    "lint": "eslint \"lib/**/*.ts\" --fix --max-warnings 0",
-    "prepare": "is-ci || husky",
-    "version": "auto-changelog && git add CHANGELOG.md",
-    "release:patch": "git add CHANGELOG.md && npm version patch --tag-version-prefix='' -f -m 'chore: release to %s'",
-    "release:push": "git push --no-verify && git push --tags --no-verify",
-    "lint-staged": "lint-staged",
-    "cspell": "cspell"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/hodfords-solutions/nestjs-mailer.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/hodfords-solutions/nestjs-mailer/issues"
-  },
-  "homepage": "https://github.com/hodfords-solutions/nestjs-mailer#readme",
-  "dependencies": {
-    "handlebars": "4.7.8",
-    "mjml": "5.0.0-alpha.6",
-    "nodemailer": "6.10.0",
-    "validator": "13.12.0",
-    "eslint-config-prettier": "10.1.1"
-  },
-  "peerDependencies": {
-    "handlebars": "*"
-  },
-  "devDependencies": {
-    "@hodfords/nestjs-eslint-config": "11.0.1",
-    "@hodfords/nestjs-prettier-config": "11.0.1",
-    "@nestjs/bull": "11.0.2",
-    "@nestjs/common": "11.0.11",
-    "@nestjs/core": "11.0.11",
-    "@types/lodash": "4.17.16",
-    "@types/mjml": "4.7.4",
-    "@types/node": "22.13.10",
-    "@types/nodemailer": "6.4.17",
-    "@types/validator": "13.12.2",
-    "auto-changelog": "2.5.0",
-    "bull": "4.16.5",
-    "cspell": "8.17.5",
-    "eslint": "9.22.0",
-    "husky": "9.1.7",
-    "is-ci": "4.1.0",
-    "lint-staged": "15.5.0",
-    "lodash": "4.17.21",
-    "prettier": "3.5.3",
-    "reflect-metadata": "0.2.2",
-    "rimraf": "6.0.1",
-    "rxjs": "7.8.2",
-    "typescript": "5.8.2"
-  }
+    "name": "@hodfords/nestjs-mailer",
+    "version": "11.1.2",
+    "description": "Simplifies sending emails in NestJS apps",
+    "main": "index.js",
+    "scripts": {
+        "prebuild": "rimraf dist",
+        "build": "tsc",
+        "postbuild": "cp package.json dist && cp README.md dist && cp .npmrc dist",
+        "format": "prettier --write \"lib/**/*.ts\"",
+        "lint": "eslint \"lib/**/*.ts\" --fix --max-warnings 0",
+        "prepare": "is-ci || husky",
+        "version": "auto-changelog && git add CHANGELOG.md",
+        "release:patch": "git add CHANGELOG.md && npm version patch --tag-version-prefix='' -f -m 'chore: release to %s'",
+        "release:push": "git push --no-verify && git push --tags --no-verify",
+        "lint-staged": "lint-staged",
+        "cspell": "cspell"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/hodfords-solutions/nestjs-mailer.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/hodfords-solutions/nestjs-mailer/issues"
+    },
+    "homepage": "https://github.com/hodfords-solutions/nestjs-mailer#readme",
+    "dependencies": {
+        "handlebars": "4.7.8",
+        "mjml": "5.0.0-alpha.6",
+        "nodemailer": "7.0.13",
+        "validator": "13.15.26",
+        "eslint-config-prettier": "10.1.8"
+    },
+    "peerDependencies": {
+        "handlebars": "*"
+    },
+    "devDependencies": {
+        "@hodfords/nestjs-eslint-config": "11.0.2",
+        "@hodfords/nestjs-prettier-config": "11.0.1",
+        "@nestjs/bull": "11.0.4",
+        "@nestjs/common": "11.1.12",
+        "@nestjs/core": "11.1.12",
+        "@types/lodash": "4.17.23",
+        "@types/mjml": "4.7.4",
+        "@types/node": "25.2.0",
+        "@types/nodemailer": "7.0.9",
+        "@types/validator": "13.15.10",
+        "auto-changelog": "2.5.0",
+        "bull": "4.16.5",
+        "cspell": "9.6.3",
+        "eslint": "9.39.2",
+        "husky": "9.1.7",
+        "is-ci": "4.1.0",
+        "lint-staged": "16.2.7",
+        "lodash": "4.17.23",
+        "prettier": "3.8.1",
+        "reflect-metadata": "0.2.2",
+        "rimraf": "6.1.2",
+        "rxjs": "7.8.2",
+        "typescript": "5.9.3"
+    }
 }
