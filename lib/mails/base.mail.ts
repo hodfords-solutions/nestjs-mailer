@@ -1,4 +1,4 @@
-import { Attachment } from 'nodemailer/lib/mailer';
+import { Attachment } from 'nodemailer/lib/mailer/index.js';
 
 export abstract class BaseMail {
     private details: string = '';

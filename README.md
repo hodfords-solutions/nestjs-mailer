@@ -4,6 +4,16 @@
 
 <p align="center"> <b>nestjs-mailer</b> simplifies integrating and managing email functionalities in NestJS applications, making email operations easier and more efficient.</p>
 
+## Requirements 📋
+
+-   This package is **ESM-only**. It must be loaded with `import` (or `await import(...)`); `require()` is not supported.
+-   Node.js `>=20.19.0` (or `>=22.12`, `>=24.15`, `>=26`).
+
+| `@hodfords/nestjs-mailer` | NestJS |
+| ------------------------- | ------ |
+| `v12.x`                   | `v12`  |
+| `v11.x`                   | `v11`  |
+
 ## Installation 🤖
 
 Install the `nestjs-mailer` package with:

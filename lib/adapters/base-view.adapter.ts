@@ -1,5 +1,5 @@
 import { readFileSync } from 'fs';
-import { BaseMail } from '../mails/base.mail';
+import { BaseMail } from '../mails/base.mail.js';
 
 export abstract class BaseViewAdapter {
     public abstract render(mail: BaseMail): Promise<string> | string;

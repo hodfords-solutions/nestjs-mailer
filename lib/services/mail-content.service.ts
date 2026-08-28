@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { MAILER_OPTIONS } from '../constants/mailer.constant';
-import { MailerOptions } from '../interfaces/mailer-options.interface';
-import { BaseMail } from '../mails/base.mail';
+import { MAILER_OPTIONS } from '../constants/mailer.constant.js';
+import { MailerOptions } from '../interfaces/mailer-options.interface.js';
+import { BaseMail } from '../mails/base.mail.js';
 
 @Injectable()
 export class MailContentService {

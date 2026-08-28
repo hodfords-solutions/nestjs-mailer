@@ -1,12 +1,12 @@
 import { DynamicModule, Global, Module, Provider, ValueProvider } from '@nestjs/common';
-import { MailContentService } from './services/mail-content.service';
-import { MailService } from './services/mail.service';
-import { MailerOptions } from './interfaces/mailer-options.interface';
-import { MAILER_OPTIONS } from './constants/mailer.constant';
+import { MailContentService } from './services/mail-content.service.js';
+import { MailService } from './services/mail.service.js';
+import { MailerOptions } from './interfaces/mailer-options.interface.js';
+import { MAILER_OPTIONS } from './constants/mailer.constant.js';
 import { BullModule } from '@nestjs/bull';
-import { MailProcessor } from './processor/mail.processor';
-import { MailerAsyncOptions } from './interfaces/mailer-options-async.interface';
-import { MailerOptionsFactory } from './interfaces/mailer-options-factory.interface';
+import { MailProcessor } from './processor/mail.processor.js';
+import { MailerAsyncOptions } from './interfaces/mailer-options-async.interface.js';
+import { MailerOptionsFactory } from './interfaces/mailer-options-factory.interface.js';
 
 @Global()
 @Module({})

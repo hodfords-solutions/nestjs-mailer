@@ -1,7 +1,7 @@
-import { HbsConfig } from '../interfaces/hbs-config.interface';
-import { BaseMail } from '../mails/base.mail';
-import { BaseViewAdapter } from './base-view.adapter';
-import { HbsAdapter } from './hbs.adapter';
+import { HbsConfig } from '../interfaces/hbs-config.interface.js';
+import { BaseMail } from '../mails/base.mail.js';
+import { BaseViewAdapter } from './base-view.adapter.js';
+import { HbsAdapter } from './hbs.adapter.js';
 
 export class HbsFactoryAdapter extends BaseViewAdapter {
     adapterMap: Map<string, HbsAdapter>;

@@ -1,8 +1,8 @@
 import { OnQueueActive, OnQueueCompleted, OnQueueFailed, Process, Processor } from '@nestjs/bull';
 import { Logger } from '@nestjs/common';
 import { Job } from 'bull';
-import Mail, { Address } from 'nodemailer/lib/mailer';
-import { MailService } from '../services/mail.service';
+import Mail, { Address } from 'nodemailer/lib/mailer/index.js';
+import { MailService } from '../services/mail.service.js';
 
 @Processor('mails')
 export class MailProcessor {
