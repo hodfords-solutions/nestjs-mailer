@@ -1,6 +1,6 @@
 import { readdirSync, readFileSync } from 'fs';
 import Handlebars from 'handlebars';
-import camelCase from 'lodash/camelCase.js';
+import { camelCase } from 'es-toolkit';
 import { join } from 'path';
 import { HbsConfig } from '../interfaces/hbs-config.interface.js';
 import { BaseMail } from '../mails/base.mail.js';

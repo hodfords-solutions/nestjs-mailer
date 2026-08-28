@@ -31,11 +31,12 @@
     },
     "homepage": "https://github.com/hodfords-solutions/nestjs-mailer#readme",
     "dependencies": {
+        "es-toolkit": "1.51.0",
+        "eslint-config-prettier": "10.1.8",
         "handlebars": "4.7.8",
         "mjml": "5.0.0-alpha.6",
         "nodemailer": "7.0.13",
-        "validator": "13.15.26",
-        "eslint-config-prettier": "10.1.8"
+        "validator": "13.15.26"
     },
     "peerDependencies": {
         "handlebars": "*",
@@ -49,7 +50,6 @@
         "@nestjs/common": "12.0.1",
         "@nestjs/core": "12.0.1",
         "@swc/core": "^1.13.5",
-        "@types/lodash": "4.17.23",
         "@types/mjml": "4.7.4",
         "@types/node": "25.2.0",
         "@types/nodemailer": "7.0.9",
@@ -61,7 +61,6 @@
         "husky": "9.1.7",
         "is-ci": "4.1.0",
         "lint-staged": "16.2.7",
-        "lodash": "4.17.23",
         "prettier": "3.8.1",
         "reflect-metadata": "0.2.2",
         "rimraf": "6.1.2",

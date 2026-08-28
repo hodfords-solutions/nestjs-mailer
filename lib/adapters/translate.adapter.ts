@@ -1,4 +1,4 @@
-import escapeRegExp from 'lodash/escapeRegExp.js';
+import { escapeRegExp } from 'es-toolkit';
 import { BaseMail } from '../mails/base.mail.js';
 import { BaseViewAdapter } from './base-view.adapter.js';
 import { ParseTransTagType } from '../types/parse-trans-tag.type.js';
