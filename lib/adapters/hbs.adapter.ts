@@ -1,10 +1,10 @@
 import { readdirSync, readFileSync } from 'fs';
 import Handlebars from 'handlebars';
-import { camelCase } from 'lodash';
+import camelCase from 'lodash/camelCase.js';
 import { join } from 'path';
-import { HbsConfig } from '../interfaces/hbs-config.interface';
-import { BaseMail } from '../mails/base.mail';
-import { BaseViewAdapter } from './base-view.adapter';
+import { HbsConfig } from '../interfaces/hbs-config.interface.js';
+import { BaseMail } from '../mails/base.mail.js';
+import { BaseViewAdapter } from './base-view.adapter.js';
 
 export class HbsAdapter extends BaseViewAdapter {
     handlebars: typeof Handlebars;

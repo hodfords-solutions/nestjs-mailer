@@ -1,6 +1,6 @@
-import SMTPTransport from 'nodemailer/lib/smtp-transport';
-import { BaseViewAdapter } from '../adapters/base-view.adapter';
-import { BaseMail } from '../mails/base.mail';
+import SMTPTransport from 'nodemailer/lib/smtp-transport/index.js';
+import { BaseViewAdapter } from '../adapters/base-view.adapter.js';
+import { BaseMail } from '../mails/base.mail.js';
 
 interface RenderInterface {
     adapters: BaseViewAdapter[];

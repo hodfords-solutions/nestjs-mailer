@@ -2,7 +2,7 @@
     "name": "@hodfords/nestjs-mailer",
     "version": "11.1.2",
     "description": "Simplifies sending emails in NestJS apps",
-    "main": "index.js",
+    "main": "./index.js",
     "scripts": {
         "prebuild": "rimraf dist",
         "build": "tsc",
@@ -14,7 +14,10 @@
         "release:patch": "git add CHANGELOG.md && npm version patch --tag-version-prefix='' -f -m 'chore: release to %s'",
         "release:push": "git push --no-verify && git push --tags --no-verify",
         "lint-staged": "lint-staged",
-        "cspell": "cspell"
+        "cspell": "cspell",
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "test:cov": "vitest run --coverage"
     },
     "repository": {
         "type": "git",
@@ -35,14 +38,17 @@
         "eslint-config-prettier": "10.1.8"
     },
     "peerDependencies": {
-        "handlebars": "*"
+        "handlebars": "*",
+        "@nestjs/common": ">=12.0.0",
+        "@nestjs/core": ">=12.0.0"
     },
     "devDependencies": {
         "@hodfords/nestjs-eslint-config": "11.0.2",
         "@hodfords/nestjs-prettier-config": "11.0.1",
         "@nestjs/bull": "11.0.4",
-        "@nestjs/common": "11.1.12",
-        "@nestjs/core": "11.1.12",
+        "@nestjs/common": "12.0.1",
+        "@nestjs/core": "12.0.1",
+        "@swc/core": "^1.13.5",
         "@types/lodash": "4.17.23",
         "@types/mjml": "4.7.4",
         "@types/node": "25.2.0",
@@ -60,6 +66,31 @@
         "reflect-metadata": "0.2.2",
         "rimraf": "6.1.2",
         "rxjs": "7.8.2",
-        "typescript": "5.9.3"
+        "typescript": "5.9.3",
+        "unplugin-swc": "^1.5.7",
+        "vitest": "^4.1.10"
+    },
+    "type": "module",
+    "types": "./index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./index.d.ts",
+            "import": "./index.js",
+            "default": "./index.js"
+        },
+        "./package.json": "./package.json"
+    },
+    "engines": {
+        "node": ">=20.19.0"
+    },
+    "overrides": {
+        "@nestjs/bull": {
+            "@nestjs/common": "12.0.1",
+            "@nestjs/core": "12.0.1"
+        },
+        "@nestjs/bull-shared": {
+            "@nestjs/common": "12.0.1",
+            "@nestjs/core": "12.0.1"
+        }
     }
 }

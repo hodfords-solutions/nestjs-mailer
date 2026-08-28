@@ -1,6 +1,6 @@
 import { ModuleMetadata, Type } from '@nestjs/common';
-import { MailerOptionsFactory } from './mailer-options-factory.interface';
-import { MailerOptions } from './mailer-options.interface';
+import { MailerOptionsFactory } from './mailer-options-factory.interface.js';
+import { MailerOptions } from './mailer-options.interface.js';
 
 export interface MailerAsyncOptions extends Pick<ModuleMetadata, 'imports'> {
     inject?: any;

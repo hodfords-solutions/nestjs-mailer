@@ -1,6 +1,6 @@
 import mjml2html from 'mjml';
-import { BaseMail } from '../mails/base.mail';
-import { BaseViewAdapter } from './base-view.adapter';
+import { BaseMail } from '../mails/base.mail.js';
+import { BaseViewAdapter } from './base-view.adapter.js';
 
 export class MjmlAdapter extends BaseViewAdapter {
     public async render(mail: BaseMail): Promise<string> {

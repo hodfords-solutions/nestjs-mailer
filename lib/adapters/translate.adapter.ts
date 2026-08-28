@@ -1,7 +1,7 @@
-import { escapeRegExp } from 'lodash';
-import { BaseMail } from '../mails/base.mail';
-import { BaseViewAdapter } from './base-view.adapter';
-import { ParseTransTagType } from '../types/parse-trans-tag.type';
+import escapeRegExp from 'lodash/escapeRegExp.js';
+import { BaseMail } from '../mails/base.mail.js';
+import { BaseViewAdapter } from './base-view.adapter.js';
+import { ParseTransTagType } from '../types/parse-trans-tag.type.js';
 
 export class TranslateAdapter extends BaseViewAdapter {
     constructor(private trans: (...args: unknown[]) => string) {

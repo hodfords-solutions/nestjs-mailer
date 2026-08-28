@@ -2,12 +2,12 @@ import { InjectQueue } from '@nestjs/bull';
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Queue } from 'bull';
 import { createTransport } from 'nodemailer';
-import Mail, { Address } from 'nodemailer/lib/mailer';
-import isEmail from 'validator/lib/isEmail';
-import { MAILER_OPTIONS } from '../constants/mailer.constant';
-import { MailerOptions } from '../interfaces/mailer-options.interface';
-import { BaseMail } from '../mails/base.mail';
-import { MailContentService } from './mail-content.service';
+import Mail, { Address } from 'nodemailer/lib/mailer/index.js';
+import validator from 'validator';
+import { MAILER_OPTIONS } from '../constants/mailer.constant.js';
+import { MailerOptions } from '../interfaces/mailer-options.interface.js';
+import { BaseMail } from '../mails/base.mail.js';
+import { MailContentService } from './mail-content.service.js';
 
 @Injectable()
 export class MailService {
@@ -104,12 +104,12 @@ export class MailService {
     private stringifyEmails(receivers: string | (string | Address)[] | Address): string[] {
         if (!Array.isArray(receivers)) {
             const email = typeof receivers === 'string' ? receivers : receivers.address;
-            return isEmail(email) ? [email] : [];
+            return validator.isEmail(email) ? [email] : [];
         }
 
         return receivers.reduce((acc, email) => {
             const strEmail = typeof email === 'string' ? email : email.address;
-            return isEmail(strEmail) ? acc.concat(strEmail) : acc;
+            return validator.isEmail(strEmail) ? acc.concat(strEmail) : acc;
         }, [] as string[]);
     }
 
