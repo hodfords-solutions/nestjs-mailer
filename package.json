@@ -1,10 +1,10 @@
 {
     "name": "@hodfords/nestjs-mailer",
-    "version": "12.0.0",
+    "version": "12.1.0",
     "description": "Simplifies sending emails in NestJS apps",
     "main": "./index.js",
     "scripts": {
-        "prebuild": "rimraf dist",
+        "prebuild": "rimraf dist *.tsbuildinfo",
         "build": "tsc",
         "postbuild": "cp package.json dist && cp README.md dist && cp .npmrc dist",
         "format": "prettier --write \"lib/**/*.ts\"",
@@ -33,15 +33,15 @@
     "dependencies": {
         "es-toolkit": "1.51.0",
         "eslint-config-prettier": "10.1.8",
-        "handlebars": "4.7.8",
+        "handlebars": "*",
         "mjml": "5.0.0-alpha.6",
         "nodemailer": "7.0.13",
         "validator": "13.15.26"
     },
     "peerDependencies": {
-        "handlebars": "*",
         "@nestjs/common": ">=12.0.0",
-        "@nestjs/core": ">=12.0.0"
+        "@nestjs/core": ">=12.0.0",
+        "handlebars": "*"
     },
     "devDependencies": {
         "@hodfords/nestjs-eslint-config": "11.0.2",
@@ -65,7 +65,7 @@
         "reflect-metadata": "0.2.2",
         "rimraf": "6.1.2",
         "rxjs": "7.8.2",
-        "typescript": "5.9.3",
+        "typescript": "6.0.3",
         "unplugin-swc": "^1.5.7",
         "vitest": "^4.1.10"
     },
