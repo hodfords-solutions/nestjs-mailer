@@ -1,6 +1,6 @@
 {
     "name": "@hodfords/nestjs-mailer",
-    "version": "12.1.0",
+    "version": "12.2.0",
     "description": "Simplifies sending emails in NestJS apps",
     "main": "./index.js",
     "scripts": {
@@ -39,9 +39,16 @@
         "validator": "13.15.26"
     },
     "peerDependencies": {
+        "@nestjs/bull": ">=12.0.0",
         "@nestjs/common": ">=12.0.0",
         "@nestjs/core": ">=12.0.0",
+        "bull": ">=4.0.0",
         "handlebars": "*"
+    },
+    "peerDependenciesMeta": {
+        "bull": {
+            "optional": true
+        }
     },
     "devDependencies": {
         "@hodfords/nestjs-eslint-config": "11.0.2",
