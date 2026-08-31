@@ -1,10 +1,10 @@
-import { InjectQueue } from '@nestjs/bull';
+import { InjectQueue } from '@nestjs/bullmq';
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { Queue } from 'bull';
+import { Queue } from 'bullmq';
 import { createTransport } from 'nodemailer';
 import Mail, { Address } from 'nodemailer/lib/mailer/index.js';
 import validator from 'validator';
-import { MAILER_OPTIONS } from '../constants/mailer.constant.js';
+import { MAILER_OPTIONS, MAIL_JOB, MAIL_QUEUE } from '../constants/mailer.constant.js';
 import { MailerOptions } from '../interfaces/mailer-options.interface.js';
 import { BaseMail } from '../mails/base.mail.js';
 import { MailContentService } from './mail-content.service.js';
@@ -18,13 +18,13 @@ export class MailService {
     constructor(
         @Inject(MAILER_OPTIONS) private mailerOptions: MailerOptions,
         private mailContentService: MailContentService,
-        @InjectQueue('mails') private mailQueue: Queue
+        @InjectQueue(MAIL_QUEUE) private mailQueue: Queue
     ) {
         this.transport = createTransport(mailerOptions.transport);
     }
 
     public async addToQueue(mail: BaseMail): Promise<void> {
-        await this.mailQueue.add(await this.getMailOptions(mail));
+        await this.mailQueue.add(MAIL_JOB, await this.getMailOptions(mail));
     }
 
     public async send(mail: BaseMail): Promise<void | undefined> {

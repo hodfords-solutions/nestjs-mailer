@@ -9,10 +9,11 @@
 -   This package is **ESM-only**. It must be loaded with `import` (or `await import(...)`); `require()` is not supported.
 -   Node.js `>=20.19.0` (or `>=22.12`, `>=24.15`, `>=26`).
 
-| `@hodfords/nestjs-mailer` | NestJS |
-| ------------------------- | ------ |
-| `v12.x`                   | `v12`  |
-| `v11.x`                   | `v11`  |
+| `@hodfords/nestjs-mailer` | NestJS | Queue                            |
+| ------------------------- | ------ | -------------------------------- |
+| `v12.2.0`+                | `v12`  | `@nestjs/bullmq` + `bullmq`      |
+| `v12.0.x` – `v12.1.x`     | `v12`  | `@nestjs/bull` + `bull` (legacy) |
+| `v11.x`                   | `v11`  | `@nestjs/bull` + `bull` (legacy) |
 
 ## Installation 🤖
 
@@ -20,6 +21,20 @@ Install the `nestjs-mailer` package with:
 
 ```
 npm install @hodfords/nestjs-mailer --save
+```
+
+Queueing is backed by [BullMQ](https://docs.bullmq.io). `addToQueue` needs `@nestjs/bullmq`
+and `bullmq` — they are peer dependencies, so install them alongside this package and register
+the root connection once in your application:
+
+```
+npm install @nestjs/bullmq bullmq --save
+```
+
+```typescript
+BullModule.forRoot({
+    connection: { host: env.REDIS_HOST, port: env.REDIS_PORT }
+});
 ```
 
 To configure the mailer module dynamically, use `forRoot` to define your email template renderers, transport settings, and default sender email.
@@ -143,8 +158,9 @@ You have two options for sending emails:
 await this.mailService.send(mail);
 ```
 
--   **Add to Queue**: Use this method when you need to send a large number of emails. Emails will be queued and sent
-    asynchronously.
+-   **Add to Queue**: Use this method when you need to send a large number of emails. Emails will be queued on the
+    `mails` BullMQ queue and sent asynchronously by the built-in worker. Requires `BullModule.forRoot(...)` to be
+    registered (see [Installation](#installation-)).
 
 ```typescript
 for (const user of users) {

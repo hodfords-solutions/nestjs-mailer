@@ -1,17 +1,19 @@
-import { OnQueueActive, OnQueueCompleted, OnQueueFailed, Process, Processor } from '@nestjs/bull';
+import { OnWorkerEvent, Processor, WorkerHost } from '@nestjs/bullmq';
 import { Logger } from '@nestjs/common';
-import { Job } from 'bull';
+import { Job } from 'bullmq';
 import Mail, { Address } from 'nodemailer/lib/mailer/index.js';
+import { MAIL_QUEUE } from '../constants/mailer.constant.js';
 import { MailService } from '../services/mail.service.js';
 
-@Processor('mails')
-export class MailProcessor {
+@Processor(MAIL_QUEUE)
+export class MailProcessor extends WorkerHost {
     private logger = new Logger(this.constructor.name);
 
-    constructor(private mailService: MailService) {}
+    constructor(private mailService: MailService) {
+        super();
+    }
 
-    @Process()
-    async handle(job: Job<Mail.Options>) {
+    async process(job: Job<Mail.Options>): Promise<void> {
         await this.mailService.sendToTransport(job.data);
     }
 
@@ -27,20 +29,20 @@ export class MailProcessor {
         return typeof to === 'string' ? to : to.address;
     }
 
-    @OnQueueActive()
+    @OnWorkerEvent('active')
     onActive(job: Job<Mail.Options>) {
         this.logger.debug(`Processing mail job ${job.id} to ${this.mapAddress(job.data.to)}.`);
     }
 
-    @OnQueueCompleted()
+    @OnWorkerEvent('completed')
     onComplete(job: Job<Mail.Options>) {
         this.logger.debug(`Completed mail job ${job.id} to ${this.mapAddress(job.data.to)}.`);
     }
 
-    @OnQueueFailed()
-    onError(job: Job<Mail.Options>, error: Error) {
+    @OnWorkerEvent('failed')
+    onError(job: Job<Mail.Options> | undefined, error: Error) {
         this.logger.error(
-            `Failed mail job ${job.id} to ${this.mapAddress(job.data.to)}: ${error.message}`,
+            `Failed mail job ${job?.id} to ${this.mapAddress(job?.data.to)}: ${error.message}`,
             error.stack
         );
     }
