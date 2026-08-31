@@ -2,8 +2,8 @@ import { DynamicModule, Global, Module, Provider, ValueProvider } from '@nestjs/
 import { MailContentService } from './services/mail-content.service.js';
 import { MailService } from './services/mail.service.js';
 import { MailerOptions } from './interfaces/mailer-options.interface.js';
-import { MAILER_OPTIONS } from './constants/mailer.constant.js';
-import { BullModule } from '@nestjs/bull';
+import { MAILER_OPTIONS, MAIL_QUEUE } from './constants/mailer.constant.js';
+import { BullModule } from '@nestjs/bullmq';
 import { MailProcessor } from './processor/mail.processor.js';
 import { MailerAsyncOptions } from './interfaces/mailer-options-async.interface.js';
 import { MailerOptionsFactory } from './interfaces/mailer-options-factory.interface.js';
@@ -20,7 +20,7 @@ export class MailerModule {
         return {
             imports: [
                 BullModule.registerQueue({
-                    name: 'mails'
+                    name: MAIL_QUEUE
                 })
             ],
             module: MailerModule,
@@ -35,7 +35,7 @@ export class MailerModule {
         const imports = [
             ...inputImports,
             BullModule.registerQueue({
-                name: 'mails'
+                name: MAIL_QUEUE
             })
         ];
 
